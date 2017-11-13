@@ -1,0 +1,126 @@
+<html>
+    <header>
+        <title>asdasd</title>
+        <link rel="stylesheet" href="./style.bundle.css">
+        <meta name="google-signin-client_id" content="357116915437-a02cvc9dsgh8bpcct2ne63alv4lkelt2.apps.googleusercontent.com">
+        
+    </header>
+    <body ng-app="myApp">
+        <div ng-controller="firstController as ctrl">
+            ASDSAD
+            {{ctrl.name}}
+            <p>{{ctrl.picture}}</p>
+            <img ng-src="{{ctrl.picture}}"/>
+            <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
+            <div><button ng-click="ctrl.functionLoginFacebook()">Login Facebook</button></div>
+            <div><button ng-click="ctrl.functionLogOutFacebook()">Logout Facebook</button></div>
+            <div><button ng-click="ctrl.functionGetAPIFacebook()">Get Info Facebook</button></div>
+            <div><button ng-click="ctrl.functionShareFacebook()">Share Facebook</button></div>
+            <div><button id="buttonClickGoogle" ng-click="ctrl.functionLoginGoogle()">login Google</button></div>
+            <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
+            <g:plus action="share"></g:plus>
+            <a href="https://plus.google.com/share?url=https://www.youtube.com/watch?v=EV-91JV4Fws" onclick="javascript:window.open(this.href,
+            '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;">
+                <img src="https://www.gstatic.com/images/icons/gplus-64.png" alt="Share on Google+"/>
+            </a>
+            <a href="#" onclick="signOut();">Sign out Google</a>
+            <div id="player"></div>
+            <button onClick="logInLinkedIn()">Log in LinkedIn</button>
+            <button onClick="logOutLinkedIn()">Log out LinkedIn</button>
+            <button onClick="statusLinkedIn()">Check status LinkedIn</button>
+            <button onClick="getProfileLinkedIn()">get Profile LinkedIn</button>
+        </div>
+        
+        <script>
+            window.fbAsyncInit = function() {
+                FB.init({
+                appId            : '2001674743395522',
+                autoLogAppEvents : true,
+                xfbml            : true,
+                version          : 'v2.10'
+                });
+                // FB.AppEvents.logPageView();
+                FB.getLoginStatus(function(response) {
+                    console.log(response);
+                });
+            };
+            
+            (function(d, s, id){
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+
+        </script>
+        <!-- <script>
+            function onSignIn(googleUser) {
+                // Useful data for your client-side scripts:
+                var profile = googleUser.getBasicProfile();
+                console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+                console.log('Full Name: ' + profile.getName());
+                console.log('Given Name: ' + profile.getGivenName());
+                console.log('Family Name: ' + profile.getFamilyName());
+                console.log("Image URL: " + profile.getImageUrl());
+                console.log("Email: " + profile.getEmail());
+        
+                // The ID token you need to pass to your backend:
+                var id_token = googleUser.getAuthResponse().id_token;
+                console.log("ID Token: " + id_token);
+            };
+        </script> -->
+        <script>
+            function signOut() {
+              var auth2 = gapi.auth2.getAuthInstance();
+              auth2.signOut().then(function () {
+                console.log('User signed out.');
+              });
+            }
+          </script>
+        <script src="https://apis.google.com/js/platform.js"></script>
+        <script type="in/Login"></script>
+        <script type="text/javascript" src="//platform.linkedin.com/in.js">
+            api_key:   81dx1ihhkcco7j
+            authorize: true
+        </script>
+        <script>
+            function logInLinkedIn(){
+                IN.User.authorize(function(res){
+                    console.log(res);
+                });
+            }
+            function logOutLinkedIn(){
+                IN.User.logout(function(res){
+                    console.log(res);
+                });
+            }
+            function statusLinkedIn(){
+                console.log(IN.User.isAuthorized())
+            }
+            function getProfileLinkedIn(){
+                getProfileData();
+            }
+
+
+            function onLinkedInLoad(){
+                // IN.Event.on(IN, "auth", getProfileData());
+            }
+            // Handle the successful return from the API call
+            function onSuccess(data) {
+                console.log(data);
+            }
+
+            // Handle an error response from the API call
+            function onError(error) {
+                console.log(error);
+            }
+
+            // Use the API call wrapper to request the member's basic profile data
+            function getProfileData() {
+                IN.API.Raw("/people/~").result(onSuccess).error(onError);
+            }
+        </script>
+        <script src="./script.js"></script>
+    </body>
+</html>
